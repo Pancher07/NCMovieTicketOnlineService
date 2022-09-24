@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Movie page</title>
+</head>
+<body>
+<p th:text="${'Movie: ' + movie.getTitle()}">VALUE</p>
+<p th:text="${'id: ' + movie.getId()}">VALUE</p>
+<p th:text="${'Genre: ' + movie.getGenre()}">VALUE</p>
+
+<!--<a th:href="@{/movies/{id}/movie-edit (id=${movie.getId()})}">Edit</a>-->
+<form th:method="GET" th:action="@{/movies/{id}/movie-edit (id=${movie.getId()})}">
+  <input type="submit" value="Edite"/>
+</form>
+<br/>
+<form th:method="GET" th:action="@{movie-delete/{id}(id=${movie.getId()})}">
+  <input type="submit" value="Delete"/>
+</form>
+</body>
+</html>
