@@ -3,7 +3,7 @@ package ua.nc.panchenko.lab2.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.nc.panchenko.lab2.models.Movie;
-import ua.nc.panchenko.lab2.repositiry.MoviesRepository;
+import ua.nc.panchenko.lab2.repository.MoviesRepository;
 
 import java.util.List;
 
