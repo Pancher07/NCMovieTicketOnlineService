@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update session</title>
+</head>
+<body>
+<form th:method="PATCH" th:action="@{/movies/{id1}/sessions/{id2} (id1=${movie.getId()}, id2=${sess.getId()})}"
+      th:object="${sess}">
+    <label for="date">Enter date: </label>
+    <input type="text" th:field="*{date}" id="date"/>
+    <div style="color: red" th:if="${#fields.hasErrors('date')}" th:errors="*{date}">date error</div>
+    <br/>
+    <label for="time">Enter time: </label>
+    <input type="text" th:field="*{time}" id="time"/>
+    <div style="color: red" th:if="${#fields.hasErrors('time')}" th:errors="*{time}">time error</div>
+
+    <br/>
+    <input type="submit" value="Update"/>
+    <br/>
+</form>
+<br/>
+<form th:method="GET" th:action="@{/movies}">
+    <input type="submit" value="The main page"/>
+</form>
+</body>
+</html>

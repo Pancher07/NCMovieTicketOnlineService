@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create new session</title>
+</head>
+<body>
+<p>Create new session</p>
+<form th:method="POST" th:action="@{/movies/{id}/sessions (id=${movie.getId()})}" th:object="${session}">
+    <label for="date">Enter date: </label>
+    <input type="text" th:field="*{date}" id="date"/>
+    <div style="color: red" th:if="${#fields.hasErrors('date')}" th:errors="*{date}">date error</div>
+    <br/>
+    <label for="time">Enter time: </label>
+    <input type="text" th:field="*{time}" id="time"/>
+    <div style="color: red" th:if="${#fields.hasErrors('time')}" th:errors="*{time}">time error</div>
+
+    <br/>
+    <input type="submit" value="Create"/>
+    <br/>
+</form>
+<br/>
+<form th:method="GET" th:action="@{/movies}">
+    <input type="submit" value="The main page"/>
+</form>
+</body>
+</html>

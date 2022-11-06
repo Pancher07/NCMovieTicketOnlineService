@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Order page</title>
+</head>
+<body>
+<p>Make the order</p>
+<p>Your tickets:</p>
+<div th:each="ticket: ${tickets}">
+    <p th:text="${'Movie: ' + ticket.getCinemaHall().getSessionOfCinemaHall().getMovieOfSessions().getTitle() +
+     '; session date: ' + ticket.getCinemaHall().getSessionOfCinemaHall().getDate() +
+     ', session start time: ' + ticket.getCinemaHall().getSessionOfCinemaHall().getTime() +
+     '; ticket - row:' + ticket.getRow() + ', seat: ' +
+    ticket.getSeat() + ', price: ' + ticket.getPrice() + ' ₴'}"></p>
+</div>
+<br/>
+<p th:text="${'Total price: ' + basket.getTotalPrice() + ' ₴'}">Total price</p>
+<br/>
+<p>Enter your email:</p>
+
+<form th:method="POST" th:action="@{/order/successful}" th:object="${order}">
+    <label for="email">Enter email</label>
+    <input th:type="text" th:field="*{email}" id="email"/>
+    <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">email error</div>
+    <br/>
+    <input type="submit" value="Make the order"/>
+</form>
+<br/>
+<form th:method="GET" th:action="@{/movies}">
+    <input type="submit" value="The main page"/>
+</form>
+</body>
+</html>

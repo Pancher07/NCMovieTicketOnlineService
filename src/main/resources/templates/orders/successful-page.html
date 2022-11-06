@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Successful page</title>
+</head>
+<body>
+<p>Your order has been successfully completed</p>
+<br/>
+<form th:method="GET" th:action="@{/movies}">
+    <input type="submit" value="The main page"/>
+</form>
+</body>
+</html>

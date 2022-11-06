@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Session page</title>
+</head>
+<body>
+<p th:text="${'Date: ' + sess.getDate() + ', time: ' + sess.getTime()}">Session</p>
+<br/>
+
+<div th:if="${cinemaHall != null}">
+    <table>
+        <caption>SCREEN</caption>
+        <tr th:each="row: ${matrix}">
+            <td th:each="value: ${row}">
+                <span th:if="${tickets.get(value).isAvailable() == true}">
+
+                <a th:href="@{/movies/{id1}/sessions/{id2}/{id3}/add-to-basket
+                    (id1=${movie.getId()}, id2=${sess.getId()}, id3=${tickets.get(value).getId()})}"
+                   th:text="${tickets.get(value).getSeat()}">value</a>
+                </span>
+
+                <span th:if="${tickets.get(value).isAvailable() == false}">
+                    <span th:if="${tickets.get(value).getOrder() != null}">-</span>
+                    <span th:if="${tickets.get(value).getOrder() == null &&
+                    basket.getId() == tickets.get(value).getBasket().getId()}">
+
+                    <a th:href="@{/movies/{id1}/sessions/{id2}/{id3}/remove-from-basket
+                    (id1=${movie.getId()}, id2=${sess.getId()}, id3=${tickets.get(value).getId()})}"
+                       th:text="${tickets.get(value).getSeat()}"
+                       style="background-color: palegreen">value</a>
+                    </span>
+                    <span th:if="${tickets.get(value).getOrder() == null &&
+                    basket.getId() != tickets.get(value).getBasket().getId()}">-</span>
+                </span>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+    <br/>
+    <hr/>
+    <form th:if="${sess.getCinemaHall() == null}" th:method="GET"
+          th:action="@{/movies/{id1}/sessions/{id2}/cinemaHall-create
+          id1=${movie.getId()}, id2=${sess.getId()})}">
+        <input type="submit" value="Create cinema hall layout (tickets)"/>
+    </form>
+    <br/>
+    <form th:method="GET" th:action="@{/movies/{id1}/sessions/{id2}/session-edit
+                                        (id1=${movie.getId()}, id2=${sess.getId()})}">
+        <input type="submit" value="Edit session"/>
+    </form>
+    <br/>
+    <form th:method="GET" th:action="@{session-delete/{id}(id=${sess.getId()})}">
+        <input type="submit" value="Delete session"/>
+    </form>
+</div>
+<br/>
+<form th:method="GET" th:action="@{/movies}">
+    <input type="submit" value="The main page"/>
+</form>
+<br/>
+<form th:method="GET" th:action="@{/basket}">
+    <input type="submit" value="My basket"/>
+</form>
+</body>
+</html>

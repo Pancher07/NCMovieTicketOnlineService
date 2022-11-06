@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Movie list</title>
+</head>
+<body>
+<div th:each="movie : ${movies}">
+    <a th:href="@{/movies/{id}(id=${movie.getId()})}"
+       th:text="${movie.getTitle()}">movie</a>
+</div>
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+    <br/>
+    <hr/>
+    <form th:method="GET" th:action="@{/movies/movie-create}">
+        <input type="submit" value="Create new movie"/>
+    </form>
+</div>
+<br/>
+<form th:method="GET" th:action="@{/basket}">
+    <input type="submit" value="My basket"/>
+</form>
+<br/>
+<form th:method="POST" th:action="@{/logout}">
+    <input type="submit" value="Logout"/>
+</form>
+</body>
+</html>

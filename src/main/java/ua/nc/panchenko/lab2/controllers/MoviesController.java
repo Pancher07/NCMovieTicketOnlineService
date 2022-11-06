@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ua.nc.panchenko.lab2.models.Movie;
 import ua.nc.panchenko.lab2.service.MoviesService;
+import ua.nc.panchenko.lab2.service.UsersDetailsService;
 
 import javax.validation.Valid;
 
@@ -16,42 +17,45 @@ import javax.validation.Valid;
 @RequestMapping("/movies")
 public class MoviesController {
     private final MoviesService moviesService;
+    private final UsersDetailsService usersDetailsService;
 
     @Autowired
-    public MoviesController(MoviesService moviesService) {
+    public MoviesController(MoviesService moviesService, UsersDetailsService usersDetailsService) {
         this.moviesService = moviesService;
+        this.usersDetailsService = usersDetailsService;
     }
 
     @GetMapping()
     public String findAll(Model model) {
         log.info("Handling find all movies request");
         model.addAttribute("movies", moviesService.findAll());
-        return "movie-list";
+        return "movies/movie-list";
     }
 
     @GetMapping("/{id}")
     public String showMovie(@PathVariable("id") int id, Model model) {
         log.info("Handling show movie information request");
         model.addAttribute("movie", moviesService.findById(id));
-        return "movie-page";
+        model.addAttribute("sessions", moviesService.getSessionsByMovieId(id));
+        return "movies/movie-page";
     }
 
     @GetMapping("/movie-create")
     public String createMovie(@ModelAttribute("movie") Movie movie) {
-        return "movie-create";
+        return "movies/movie-create";
     }
 
     @PostMapping()
     public String saveMovie(@ModelAttribute("movie") @Valid Movie movie, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "movie-create";
+            return "movies/movie-create";
         }
-        log.info("Handling save users: " + movie);
+        log.info("Handling save movie: " + movie);
         moviesService.saveMovie(movie);
         return "redirect:/movies";
     }
 
-    @GetMapping("movie-delete/{id}")
+    @GetMapping("/movie-delete/{id}")
     public String deleteMovie(@PathVariable Integer id) {
         log.info("Handling delete movie request: " + id);
         moviesService.deleteById(id);
@@ -61,16 +65,17 @@ public class MoviesController {
     @GetMapping("/{id}/movie-edit")
     public String edit(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("movie", moviesService.findById(id));
-        return "movie-edit";
+        return "movies/movie-edit";
     }
 
-    @PostMapping("/{id}")
-    public String updateUser(@Valid Movie movie, BindingResult bindingResult) {
+    @PatchMapping("/{id}")
+    public String updateMovie(@ModelAttribute("movie") @Valid Movie movie, BindingResult bindingResult,
+                              @PathVariable("id") int id) {
         if (bindingResult.hasErrors()) {
-            return "movie-edit";
+            return "movies/movie-edit";
         }
-        log.info("Handling update movie request: " + movie);
-        moviesService.saveMovie(movie);
+        log.info("Handling update movie request: " + id);
+        moviesService.update(id, movie);
         return "redirect:/movies";
     }
 }

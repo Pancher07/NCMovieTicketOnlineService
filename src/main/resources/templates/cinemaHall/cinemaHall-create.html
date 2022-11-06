@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cinema hall - create</title>
+</head>
+<body>
+<p>Create tickets in cinema hall</p>
+<form th:method="POST" th:action="@{/movies/{id1}/sessions/{id2}
+ (id1=${movie.getId()}, id2=${sess.getId()})}" th:object="${cinemaHall}">
+    <label for="numberOfRows">Enter row: </label>
+    <input type="number" th:field="*{numberOfRows}" id="numberOfRows"/>
+    <div style="color: red" th:if="${#fields.hasErrors('numberOfRows')}" th:errors="*{numberOfRows}">row error</div>
+    <br/>
+    <label for="numberSeatsInRow">Enter seat: </label>
+    <input type="number" th:field="*{numberSeatsInRow}" id="numberSeatsInRow"/>
+    <div style="color: red" th:if="${#fields.hasErrors('numberSeatsInRow')}" th:errors="*{numberSeatsInRow}">
+        seat error
+    </div>
+    <br/>
+    <label for="priceForSeat">Enter price: </label>
+    <input type="number" th:field="*{priceForSeat}" id="priceForSeat"/>
+    <div style="color: red" th:if="${#fields.hasErrors('priceForSeat')}" th:errors="*{priceForSeat}">price error</div>
+    <br/>
+    <input type="submit" value="Create"/>
+    <br/>
+</form>
+<br/>
+<form th:method="GET" th:action="@{/movies}">
+    <input type="submit" value="The main page"/>
+</form>
+</body>
+</html>

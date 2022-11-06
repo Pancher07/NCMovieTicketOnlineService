@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create movie</title>
+</head>
+<body>
+<form th:method="POST" th:action="@{/movies}" th:object="${movie}">
+    <label for="title">Enter title: </label>
+    <input type="text" th:field="*{title}" id="title"/>
+    <div style="color: red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title error</div>
+    <br/>
+    <label for="genre">Enter genre: </label>
+    <input type="text" th:field="*{genre}" id="genre"/>
+    <div style="color: red" th:if="${#fields.hasErrors('genre')}" th:errors="*{genre}">Genre error</div>
+    <br/>
+    <label for="country">Enter country: </label>
+    <input type="text" th:field="*{country}" id="country"/>
+    <div style="color: red" th:if="${#fields.hasErrors('country')}" th:errors="*{country}">country error</div>
+    <br/>
+    <label for="movieLanguage">Enter movie language: </label>
+    <input type="text" th:field="*{movieLanguage}" id="movieLanguage"/>
+    <div style="color: red" th:if="${#fields.hasErrors('movieLanguage')}" th:errors="*{movieLanguage}">
+        movieLanguage error
+    </div>
+    <br/>
+    <label for="starring">Enter starring: </label>
+    <input type="text" th:field="*{starring}" id="starring"/>
+    <div style="color: red" th:if="${#fields.hasErrors('starring')}" th:errors="*{starring}">starring error</div>
+    <br/>
+    <label for="directedBy">Enter "directed by": </label>
+    <input type="text" th:field="*{directedBy}" id="directedBy"/>
+    <div style="color: red" th:if="${#fields.hasErrors('directedBy')}" th:errors="*{directedBy}">directedBy error</div>
+    <br/>
+    <label for="screenplayBy">Enter "screenplay by": </label>
+    <input type="text" th:field="*{screenplayBy}" id="screenplayBy"/>
+    <div style="color: red" th:if="${#fields.hasErrors('screenplayBy')}" th:errors="*{screenplayBy}">
+        screenplayBy error
+    </div>
+    <br/>
+    <label for="duration">Enter duration: </label>
+    <input type="text" th:field="*{duration}" id="duration"/>
+    <div style="color: red" th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}">duration error</div>
+    <br/>
+    <label for="description">Enter description: </label>
+    <input type="text" th:field="*{description}" id="description"/>
+    <div style="color: red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">
+        description error
+    </div>
+    <br/>
+    <input type="submit" value="Create"/>
+    <br/>
+</form>
+<br/>
+<form th:method="GET" th:action="@{/movies}">
+    <input type="submit" value="The main page"/>
+</form>
+</body>
+</html>

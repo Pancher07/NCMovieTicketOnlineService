@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Session-list page</title>
+</head>
+<body>
+<p th:text="${'Sessions'}">Sessions</p>
+<div th:each="sess : ${sessions}">
+    <a th:href="@{/movies/{id1}/sessions/{id2}(id1=${movie.getId()}, id2=${sess.getId()})}"
+       th:text="${sess.getDate() + ': ' + sess.getTime()}">sess</a>
+</div>
+
+<br/>
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+<hr/>
+<form th:method="GET" th:action="@{/movies/{id}/sessions/session-create (id=${movie.getId()})}">
+    <input type="submit" value="Creat new session"/>
+</form>
+</div>
+<br/>
+<form th:method="GET" th:action="@{/basket}">
+    <input type="submit" value="My basket"/>
+</form>
+<br/>
+<form th:method="GET" th:action="@{/movies}">
+    <input type="submit" value="The main page"/>
+</form>
+</body>
+</html>
+

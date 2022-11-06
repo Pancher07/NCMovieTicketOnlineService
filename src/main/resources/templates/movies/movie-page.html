@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Movie page</title>
+</head>
+<body>
+<p th:text="${'Movie: ' + movie.getTitle()}">VALUE</p>
+<p th:text="${'id: ' + movie.getId()}">VALUE</p>
+<p th:text="${'Genre: ' + movie.getGenre()}">VALUE</p>
+<p th:text="${'Country: ' + movie.getCountry()}">VALUE</p>
+<p th:text="${'Movie language: ' + movie.getMovieLanguage()}">VALUE</p>
+<p th:text="${'Starring: ' + movie.getStarring()}">VALUE</p>
+<p th:text="${'Directed by: ' + movie.getDirectedBy()}">VALUE</p>
+<p th:text="${'Screenplay by: ' + movie.getScreenplayBy()}">VALUE</p>
+<p th:text="${'Duration: ' + movie.getDuration()}">VALUE</p>
+<p th:text="${'Description: ' + movie.getDescription()}">VALUE</p>
+<br/>
+<form th:method="GET" th:action="@{/movies/{id}/sessions (id=${movie.getId()})}">
+    <input type="submit" value="Sessions"/>
+</form>
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+    <br/>
+    <hr/>
+    <form th:method="GET" th:action="@{/movies/{id}/movie-edit (id=${movie.getId()})}">
+        <input type="submit" value="Edite"/>
+    </form>
+    <br/>
+    <form th:method="GET" th:action="@{movie-delete/{id}(id=${movie.getId()})}">
+        <input type="submit" value="Delete"/>
+    </form>
+</div>
+<br/>
+<form th:method="GET" th:action="@{/basket}">
+    <input type="submit" value="My basket"/>
+</form>
+<br/>
+<form th:method="GET" th:action="@{/movies}">
+    <input type="submit" value="The main page"/>
+</form>
+</body>
+</html>

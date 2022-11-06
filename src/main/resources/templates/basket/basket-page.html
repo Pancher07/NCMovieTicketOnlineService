@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Basket</title>
+</head>
+<body>
+<p th:if="${tickets.size()>0}" th:text="${'Hello, ' + user.getUsername() + ', this is your ticket list:'}">text</p>
+<p th:if="${tickets.size() == 0}" th:text="${'Hello, ' + user.getUsername() + ', your basket is empty.'}">text</p>
+<div th:each="ticket : ${tickets}">
+    <a th:text="${'Movie: ' + ticket.getCinemaHall().getSessionOfCinemaHall().getMovieOfSessions().getTitle() +
+     '; session date: ' + ticket.getCinemaHall().getSessionOfCinemaHall().getDate() +
+     ', session start time: ' + ticket.getCinemaHall().getSessionOfCinemaHall().getTime() +
+     '; ticket - row:' + ticket.getRow() + ', seat: ' +
+    ticket.getSeat() + ', price: ' + ticket.getPrice() + ' ₴'}">ticket</a>
+
+    <a th:href="@{/basket/ticket-remove/{ticket_id} (ticket_id=${ticket.getId()})}"
+       th:text="${'Remove from basket'}">Remove</a>
+</div>
+<br/>
+<p th:text="${'Total price: ' + basket.getTotalPrice() + ' ₴'}">Total price</p>
+<br/>
+<form th:if="${tickets.size()>0}" th:method="GET" th:action="@{/order}">
+    <input type="submit" value="Make the order"/>
+</form>
+<br/>
+<form th:method="GET" th:action="@{/movies}">
+    <input type="submit" value="The main page"/>
+</form>
+</body>
+</html>
